@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <title>Title</title>
+</head>
+<body>
+{% for item in items %}
+
+    <form action={% url 'items:item' item.id %} method="GET">
+        <button type="submit" class="btn btn-primary" id="checkout-button">
+            {{ item.name }}
+        </button>
+    </form>
+    <br>
+
+
+{% endfor %}
+
+Боковое меню:
+<br>
+<form action={% url 'items:order' %} method="GET">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary"
+            id="checkout-button">Корзина
+    </button>
+</form>
+</body>
+</html>

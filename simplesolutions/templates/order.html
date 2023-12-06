@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <title>Title</title>
+</head>
+<body>
+{% if button_pay %}
+    Товары в корзине:
+    <br>
+    <br>
+
+    {% for order in orders %}
+
+        <form action={% url 'items:item' order.item.id %} method="GET">
+            <button type="submit" class="btn btn-primary" id="checkout-button">
+                {{ order.item.name }}
+            </button>
+        </form>
+        Стоимость: {{ order.item.get_display_price }} {{ order.item.currency }}
+        <br>  <br>
+
+    {% endfor %}
+    Боковое меню:
+    <br>
+    <form action={% url 'items:buy_all' %} method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary"
+                id="checkout-button">Оплатить все что есть в корзине
+        </button>
+    </form>
+    <br>
+
+    {% if button %}
+        <form action={% url 'items:discount' 'f4w6f46w' %} method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary" id="checkout-button">
+                Применить скидку 30%
+            </button>
+        </form>
+        <br>
+
+    {% else %}
+
+        <form action={% url 'items:delete_discount' %} method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary" id="checkout-button">
+                Убрать скидку
+            </button>
+        </form>
+        <br>
+    {% endif %}
+{% else %}
+    Товары в корзине отсутствуют
+    <br><br>
+{% endif %}
+
+<form action={% url 'items:index' %} method="GET">
+    <button type="submit" class="btn btn-primary" id="checkout-button">
+        На главную страницу
+    </button>
+</form>
+
+</body>
+</html>
