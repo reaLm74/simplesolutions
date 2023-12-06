@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   web:
-    build: ../simplesolutions/
+    image: realm74/simplesolutions:latest
     restart: always
     volumes:
       - .:/code
